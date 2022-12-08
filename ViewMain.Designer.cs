@@ -28,7 +28,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.gameTimer = new System.Windows.Forms.Timer(this.components);
+            this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.BtnStart = new System.Windows.Forms.Button();
             this.Canvas = new System.Windows.Forms.PictureBox();
             this.LblScore = new System.Windows.Forms.Label();
@@ -36,9 +36,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
-            // gameTimer
+            // GameTimer
             // 
-            this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
+            this.GameTimer.Interval = 120;
+            this.GameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
             // BtnStart
             // 
@@ -111,7 +112,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer gameTimer;
+        private System.Windows.Forms.Timer GameTimer;
         private Button BtnStart;
         private PictureBox Canvas;
         private Label LblScore;

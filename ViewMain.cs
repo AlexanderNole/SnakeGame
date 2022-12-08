@@ -23,6 +23,7 @@ namespace SnakeGame
         {
             InitializeComponent();
             new Settings();
+            
         }
 
         private void BtnStart_Click(object sender, EventArgs e)
@@ -106,8 +107,16 @@ namespace SnakeGame
                         EatFood();
 
                     for (int j = 1; j < snake.Count; j++) {
-                        if (snake[i].X == snake[j].X && snake[i].Y == snake[j].Y)
+                        if (snake[i].X == snake[j].X && snake[i].Y == snake[j].Y) {
                             GameOver();
+
+                            DialogResult reuslt = MessageBox.Show("Play Again?", "GAME OVER", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                            if (reuslt != DialogResult.Yes)
+                                Close();
+
+                            RestartGame();
+                        }
                     }
 
                 } else {
@@ -156,6 +165,13 @@ namespace SnakeGame
 
             BtnStart.Enabled = false;
             LblScore.Text = "Score: " + score;
+            GameTimer.Interval = 120;
+
+            isLeft = false;
+            isRight = false;
+            isDown = false;
+            isUp = false;
+            Settings.Directions = "left";
 
             // Se crea la cabeza de la serpiente y se agrega a la lista
             Circle head = new Circle { X = 10, Y = 5 };
@@ -171,7 +187,7 @@ namespace SnakeGame
             food = new Circle { X = rand.Next(2, maxWidth), Y = rand.Next(2, maxHeight) };
 
             // Inicializamos el temporizador
-            gameTimer.Start();
+            GameTimer.Start();
         }
 
         private void EatFood()
@@ -186,18 +202,18 @@ namespace SnakeGame
 
             snake.Add(body);
 
-            if (gameTimer.Interval > 60)
-                gameTimer.Interval -= 3;
-            else if (gameTimer.Interval > 40)
-                gameTimer.Interval --;
-            else gameTimer.Interval = 40;
+            if (GameTimer.Interval > 60)
+                GameTimer.Interval -= 3;
+            else if (GameTimer.Interval > 40)
+                GameTimer.Interval--;
+            else GameTimer.Interval = 40;
 
             food = new Circle { X = rand.Next(2, maxWidth), Y = rand.Next(2, maxHeight) };
         }
 
         private void GameOver()
         {
-            gameTimer.Stop();
+            GameTimer.Stop();
             BtnStart.Enabled = true;
 
             if (score > highScore) {
